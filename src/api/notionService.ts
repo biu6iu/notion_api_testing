@@ -1,22 +1,4 @@
-const { Client } = require('@notionhq/client');
-const dotenv = require('dotenv');
-
-// Load environment variables
-dotenv.config();
-
-// Initialise Notion client
-const notion = new Client({
-  auth: process.env.api_key,
-});
-
-
-const databaseId = process.env.database_id;
-
-if (!databaseId) {
-  throw new Error('Database ID not found in environment variables');
-}
-
-console.log('Notion client initialised successfully');
+const { notion, databaseId } = require('../config/notion');
 
 
 async function queryDatabase() {
@@ -25,8 +7,8 @@ async function queryDatabase() {
       database_id: databaseId,
     });
     
-    console.log('📋 Database query successful');
-    console.log(`📄 Found ${response.results.length} pages`);
+    console.log('Database query successful');
+    console.log(`Found ${response.results.length} pages`);
     
     return response;
   } catch (error) {
@@ -35,15 +17,15 @@ async function queryDatabase() {
   }
 }
 
-// Function to get database properties
+
 async function getDatabaseProperties() {
   try {
     const response = await notion.databases.retrieve({
       database_id: databaseId,
     });
     
-    console.log('🔍 Database properties retrieved');
-    console.log('📋 Properties:', Object.keys(response.properties));
+    console.log('Database properties retrieved');
+    console.log('Properties:', Object.keys(response.properties));
     
     return response;
   } catch (error) {
@@ -52,7 +34,7 @@ async function getDatabaseProperties() {
   }
 }
 
-// Function to create a new page in the database
+
 async function createPage(properties: any) {
   try {
     const response = await notion.pages.create({
@@ -71,7 +53,7 @@ async function createPage(properties: any) {
   }
 }
 
-// Function to update a page
+
 async function updatePage(pageId: string, properties: any) {
   try {
     const response = await notion.pages.update({
@@ -87,7 +69,7 @@ async function updatePage(pageId: string, properties: any) {
   }
 }
 
-// Function to delete a page
+
 async function deletePage(pageId: string) {
   try {
     await notion.pages.update({
@@ -102,34 +84,46 @@ async function deletePage(pageId: string) {
   }
 }
 
-// Main function to test the connection
-async function main() {
+
+async function getPage(pageId: string) {
   try {
-    // Test database connection by getting properties
-    await getDatabaseProperties();
+    const response = await notion.pages.retrieve({
+      page_id: pageId,
+    });
     
-    // Test database query
-    await queryDatabase();
-    
-    
+    console.log('Page retrieved successfully');
+    return response;
   } catch (error) {
-    console.error('Error in main function:', error);
-    process.exit(1);
+    console.error('Error retrieving page:', error);
+    throw error;
   }
 }
 
-// Run the main function if this file is executed directly
-if (require.main === module) {
-  main();
+
+async function searchNotionPages(query: string) {
+  try {
+    const response = await notion.search({
+      query,
+      filter: {
+        property: 'object',
+        value: 'page'
+      }
+    });
+    
+    console.log('Search completed successfully');
+    return response;
+  } catch (error) {
+    console.error('Error searching pages:', error);
+    throw error;
+  }
 }
 
-// Export the notion client for use in other modules
 module.exports = {
-  notion,
-  databaseId,
   queryDatabase,
   getDatabaseProperties,
   createPage,
   updatePage,
-  deletePage
+  deletePage,
+  getPage,
+  searchPages: searchNotionPages
 };

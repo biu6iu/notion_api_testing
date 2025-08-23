@@ -2,11 +2,11 @@
   "name": "notion_api_testing",
   "version": "1.0.0",
   "description": "",
-  "main": "main.ts",
+  "main": "src/api/endpoints.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "ts-node main.ts",
-    "dev": "ts-node main.ts"
+    "test": "ts-node src/test/testApis.ts",
+    "start": "ts-node src/test/testApis.ts",
+    "dev": "ts-node src/test/testApis.ts"
   },
   "repository": {
     "type": "git",
