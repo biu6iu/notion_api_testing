@@ -1,0 +1,30 @@
+{
+  "name": "notion_api_testing",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "ts-node main.ts",
+    "dev": "ts-node main.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/biu6iu/notion_api_testing.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/biu6iu/notion_api_testing/issues"
+  },
+  "homepage": "https://github.com/biu6iu/notion_api_testing#readme",
+  "dependencies": {
+    "@notionhq/client": "^4.0.2",
+    "@types/node": "^24.3.0",
+    "dotenv": "^17.2.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.2"
+  }
+}
