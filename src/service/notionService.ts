@@ -1,4 +1,4 @@
-const { notion, databaseId } = require('../config/notion');
+const { notion, databaseId } = require('../notion');
 
 
 async function queryDatabase() {

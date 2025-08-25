@@ -15,8 +15,6 @@ if (!notionDatabaseId) {
   throw new Error('Database ID not found');
 }
 
-console.log('Notion client initialised successfully');
-
 module.exports = {
   notion: notionClient,
   databaseId: notionDatabaseId

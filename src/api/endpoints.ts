@@ -1,4 +1,4 @@
-const notionService = require('./notionService');
+const notionService = require('../service/notionService');
 const { createPageProperties, handleApiError } = require('../utils/helpers');
 
 
